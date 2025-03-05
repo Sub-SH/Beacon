@@ -52,7 +52,7 @@ Save the file and exit.
 
 Next, we will edit the hostname, require a password change*, and allow SSH password authentication** by editing `user-data`. 
 
-*Requiring a password change rather than specifying the desired password is best practice as the initial password can be found in config files and system logs.
+*Requiring a password change rather than specifying the desired password is best practice as the initial password can be found in config files and system logs.\
 **While using SSH keys is vastly preferred over password auth, ensuring the keys are on any device that you may potentially need to administrate the RPi in an emergency situation could be a hindrance.  
 
 NOTE: Do NOT use sudo permissions when editing these files
