@@ -37,7 +37,7 @@ services:
     volumes:
       - /opt/kiwix/data:/data
     ports:
-      - '127:0.0.1:8080:8080'
+      - '8080:8080'
     command: '*.zim'
     restart: unless-stopped
 EOF
@@ -57,7 +57,7 @@ services:
     container_name: tileserver
     restart: unless-stopped
     ports:
-      - "127:0.0.1:8081:8080"
+      - '8081:8080'
     volumes:
       - ./data:/data
 EOF
