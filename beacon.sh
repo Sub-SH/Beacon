@@ -28,7 +28,6 @@ install_kiwix() {
     echo "Installing Kiwix-serve..."
     mkdir -p /opt/kiwix/data
     chmod -R 700 /opt/kiwix
-    chown -R "$USER_NAME":"$USER_NAME" /opt/kiwix
 
     cat <<EOF > "/opt/kiwix/docker-compose.yml"
 services:
@@ -42,13 +41,14 @@ services:
     command: '*.zim'
     restart: unless-stopped
 EOF
+    
+    chown -R "$USER_NAME":"$USER_NAME" /opt/kiwix
 }
 
 install_tileserver() {
     echo "Installing tileserver-gl..."
     mkdir -p /opt/tileserver/data
     chmod -R 700 /opt/tileserver
-    chown -R "$USER_NAME":"$USER_NAME" /opt/tileserver
 
     cat <<EOF > "/opt/tileserver/docker-compose.yml"
 services:
@@ -61,6 +61,8 @@ services:
     volumes:
       - ./data:/data
 EOF
+
+    chown -R "$USER_NAME":"$USER_NAME" /opt/tileserver
 }
 
 configure_hotspot() {
