@@ -74,7 +74,7 @@ ssh_pwauth: true
 
 Finally, we’ll enable SSH by creating an empty file called SSH
 
-`touch ../system-boot/ssh`
+```touch ../system-boot/ssh```
 
 We’re now ready to boot up the RPi for the first time. Unmount the partitions, disconnect the SSD, plug it into your RPi, and boot it up. Once it’s booted up, find the IP address it was assigned (you may have to log into your router and look at DHCP leases) and SSH into it:
 `ssh <user>@<ip>
@@ -82,11 +82,14 @@ We’re now ready to boot up the RPi for the first time. Unmount the partitions,
 You will be prompted to change your password. Re-enter the current temporary password, then enter a new password. After successfully changing the password, your SSH session will be terminated. SSH in again using the previous command.   
 
 ## Run the config script
-The configuration script can now be run. It’s easiest to run from memory using the following command:
+The configuration script can now be run. To do so:
 
-`curl -sSL https://raw.githubusercontent.com/Sub-SH/Beacon/main/beacon.sh | sudo bash`
+```
+wget https://raw.githubusercontent.com/Sub-SH/Beacon/main/beacon.sh
+chmod +x ./beacon.sh
+sudo ./beacon.sh
 
-Alternatively, you can download the script, give it executable permissions, and run it.
+```
 
 The script will take several minutes to run, primarily due to updating the system. Once it completes, the system will automatically reboot.
 
@@ -100,7 +103,7 @@ Due to the slow direct download speed of Wiki sites from the Kiwix library, it i
 2. Find the desired Wiki sites, click the “Download” button, and choose either the magnet link or torrent file to download them
 3. Once all downloaded, transfer them to your RPi using the following command:
 
-`rsync -rvz path/to/wiki_files/*.zim <user>@<ip>:/opt/kiwix/data`
+```rsync -rvz path/to/wiki_files/*.zim <user>@<ip>:/opt/kiwix/data```
 
 Alternatively, you can use `wget` to download them directly to `/opt/kiwix/data`, however, the download speed will be significantly slower (about 8 hours for just Wikipedia).
 
@@ -110,14 +113,14 @@ tileserver-gl-lite does not support rendered tiles, so your tiles must be vector
 1. Browse to [maptiler website](https://data.maptiler.com/downloads/planet/) and download the OpenStreetMap vector tiles. You will need to create an account first.
 2. Once downloaded, transfer the maptile file over to the RPi using the following command:
 
-`rsync -rvz path/to/map_tiles/*.mbtiles <user>@<ip>:/opt/tileserver/data`
+```rsync -rvz path/to/map_tiles/*.mbtiles <user>@<ip>:/opt/tileserver/data```
 
 ## Starting the Docker apps
 Once the desired map tiles and wiki sites are in the appropriate directories, the Docker apps are ready to be started. To do so:
 
 SSH back into the RPi:
 
-`ssh <user>@<ip>`
+```ssh <user>@<ip>```
 
 Start the map server:
 
