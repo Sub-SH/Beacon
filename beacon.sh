@@ -110,11 +110,6 @@ EOF
     cat <<EOF > "/etc/dnsmasq.conf"
 interface=wlan0
 dhcp-range=192.168.2.10,192.168.2.20,255.255.255.0,24h
-
-# Local domain resolution
-address=/shtf.wtf/192.168.2.1
-address=/map.shtf.wtf/192.168.2.1
-address=/wiki.shtf.wtf/192.168.2.1
 EOF
 
     cat <<EOF > "/etc/systemd/resolved.conf"
