@@ -2,9 +2,11 @@
 Beacon is an offline Raspberry Pi project to serve Wiki sites, maps, and other important data in scenarios that internet is not available. The RPi will be configured with a Wifi hotspot that clients can connect to and access data using FQDNs through a web browser rather than any special apps. 
 
 ## Recommendations and Considerations
-Using an SSD is strongly recommended for the increased read speeds due to resource-intensive nature of serving maps, especially if more than one client will be accessing data at a time. This project was developed and tested on a Raspberry Pi 4B with 8GB RAM and a Kingston SATA SSD connected via USB to SATA adapter.
+❗ The RPi must be a fresh install, and must be hardwired into internet during setup as the script configures the wlan controller. The initial instructions set you up to be able to SSH in if the RPi is running headless, however, you could use a monitor, mouse, and keyboard if you wish.
 
-Ubuntu Server 24.04.2 LTS is used for the OS, so the configuration script is built around the nuances of it. Debian or Raspberry Pi OS could most likely be used with minimal changes, but other distros would likely require manual configuration tailored to that distro.
+⚠️ Using an SSD is strongly recommended for the increased read speeds due to resource-intensive nature of serving maps, especially if more than one client will be accessing data at a time. This project was developed and tested on a Raspberry Pi 4B with 8GB RAM and a Kingston SATA SSD connected via USB to SATA adapter.
+
+⚠️ Ubuntu Server 24.04.2 LTS is used for the OS, so the configuration script is built around the nuances of it. Debian or Raspberry Pi OS could most likely be used with minimal changes, but other distros would likely require manual configuration tailored to that distro.
 
 A Linux workstation was used when creating this project, so the initial steps to format the RPi are from a Linux perspective. It is on the roadmap to provide instructions for the initial setup using Windows, which is probably very easy using the official Raspberry Pi imaging tool.   
 
@@ -72,3 +74,72 @@ ssh_pwauth: true
 
 Finally, we’ll enable SSH by creating an empty file called SSH
 `touch ../system-boot/ssh`
+
+We’re now ready to boot up the RPi for the first time. Unmount the partitions, disconnect the SSD, plug it into your RPi, and boot it up. Once it’s booted up, find the IP address it was assigned (you may have to log into your router and look at DHCP leases) and SSH into it:
+`ssh <user>@<ip>
+
+You will be prompted to change your password. Re-enter the current temporary password, then enter a new password. After successfully changing the password, your SSH session will be terminated. SSH in again using the previous command.   
+
+## Run the config script
+The configuration script can now be run. It’s easiest to run from memory using the following command:
+`curl -sSL https://raw.githubusercontent.com/Sub-SH/Beacon/main/beacon.sh | sudo bash`
+
+Alternatively, you can download the script, give it executable permissions, and run it.
+
+The script will take several minutes to run, primarily due to updating the system. Once it completes, the system will automatically reboot.
+
+Note: At this point, the Wiki and Map servers are not yet running. You must get the desired Wiki sites and maps, then put them in the appropriate directories before starting up the Docker apps.
+
+## Obtaining and transferring Wiki sites and map tiles
+### Wiki Sites
+Due to the slow direct download speed of Wiki sites from the Kiwix library, it is highly recommended to download them to your workstation via the torrent option first, then transfer them to the RPi. To do so:
+
+1. Browse to the [Kiwix Library](https://library.kiwix.org) on your workstation
+2. Find the desired Wiki sites, click the “Download” button, and choose either the magnet link or torrent file to download them
+3. Once all downloaded, transfer them to your RPi using the following command:
+`rsync -rvz path/to/wiki_files/*.zim <user>@<ip>:/opt/kiwix/data`
+
+Alternatively, you can use `wget` to download them directly to `/opt/kiwix/data`, however, the download speed will be significantly slower (about 8 hours for just Wikipedia).
+
+### Map Tiles
+tileserver-gl-lite does not support rendered tiles, so your tiles must be vector tiles. This version of tileserver-gl was chosen for increased performance on a RPi. To obtain a dataset that contains streets, buildings, lakes, and trails for the full world, you can follow these steps:
+
+1. Browse to [maptiler website](https://data.maptiler.com/downloads/planet/) and download the OpenStreetMap vector tiles. You will need to create an account first.
+2. Once downloaded, transfer the maptile file over to the RPi using the following command:
+`rsync -rvz path/to/map_tiles/*.mbtiles <user>@<ip>:/opt/tileserver/data`
+
+## Starting the Docker apps
+Once the desired map tiles and wiki sites are in the appropriate directories, the Docker apps are ready to be started. To do so:
+
+SSH back into the RPi:
+`ssh <user>@<ip>`
+
+Start the map server:
+```
+cd /opt/tileserver/
+docker compose up -d
+```
+
+Start the Wiki server:
+```
+cd /opt/mapserver/
+docker compose up -d
+```
+
+That’s it! Both services should be up and running. The services will automatically start back up after reboots as long as you do not manually bring the docker containers down. 
+
+## Accessing the Wikis and Maps
+To access the services:
+1. Connect to the RPi WiFi hotspot
+2. Using a browser, navigate to http://192.168.2.1:8080 for the Wikis
+3. Using a browser, navigate to http://192.168.2.1:8081 for the Maps
+
+## Roadmap
+I plan to continue improving this project. Here are some of the items on the roadmap:
+
+**Reverse Proxy w/ FQDNs:** I plan to stick the services behind a reverse proxy (Caddy) so that the services can be accessed using FQDN such as http://maps.beacon.com and http://wiki.beacon.com. This also provides some additional benefits such as only exposing one external port and easy SSL/HTTPS. 
+
+**Windows Instructions:** These instructions were created from the steps I took while using a Linux workstation. Translating them to work from a Windows workstation should be easy enough.
+
+**Cyberdeck w/ GUI:** Rather than a hotspot for devices to connect to, I would like to make a ‘cyberdeck’ version with a screen and keyboard that uses a GUI to interact with everything.
+
