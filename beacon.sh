@@ -59,7 +59,7 @@ services:
     ports:
       - '8081:8080'
     volumes:
-      - ./data:/data
+      - ./data:/data/tiles.mbtiles
 EOF
 
     chown -R "$USER_NAME":"$USER_NAME" /opt/tileserver
