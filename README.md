@@ -10,6 +10,11 @@ Beacon is an offline Raspberry Pi project to serve Wiki sites, maps, and other i
 
 A Linux workstation was used when creating this project, so the initial steps to format the RPi are from a Linux perspective. It is on the roadmap to provide instructions for the initial setup using Windows, which is probably very easy using the official Raspberry Pi imaging tool.   
 
+Recommended Parts
+- [RaspberryPi 4B w/ at least 4GB RAM](https://www.pishop.us/product/raspberry-pi-4-model-b-8gb/?src=raspberrypi)
+- [Kingston A400 SSD](https://www.amazon.com/dp/B01N0TQPQB)
+- [StarTech USB-A 3.1 SATA to USB Adapter](https://www.amazon.com/dp/B00XLAZODE)
+
 ## Getting Started
 
 ### Formatting the SSD
