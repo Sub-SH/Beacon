@@ -1,7 +1,7 @@
 # Beacon
 Beacon is an offline Raspberry Pi project to serve Wiki sites, maps, and other important data in scenarios that internet is not available. The RPi will be configured with a Wifi hotspot that clients can connect to and access data using FQDNs through a web browser rather than any special apps. 
 
-Like the project? 
+Like the project?  
 <a href="https://buymeacoffee.com/subsh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Recommendations and Considerations
