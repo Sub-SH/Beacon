@@ -115,7 +115,7 @@ tileserver-gl-lite does not support rendered tiles, so your tiles must be vector
 
 ```rsync -rvz path/to/map_tiles/<filename>.mbtiles <user>@<ip>:/opt/tileserver/data/map.mbtiles```
 
-⚠️ We want to ensure that the file ends up on the RPi with a specific filename so that it is recognized by tileserver-gl. While you'll need to change the filename in the rsync command to that of what you have downloaded to your workstation, **do not** change *output name* (which is the very last portion of the command, ie `:/opt/tileserver/data/map.mbtiles`.
+⚠️ We want to ensure that the file ends up on the RPi with a specific filename so that it is recognized by tileserver-gl. While you'll need to change the filename in the rsync command to that of what you have downloaded to your workstation, **do not** change *output name* (which is the very last portion of the command, ie `:/opt/tileserver/data/map.mbtiles`).
 
 ## Starting the Docker apps
 Once the desired map tiles and wiki sites are in the appropriate directories, the Docker apps are ready to be started. To do so:
