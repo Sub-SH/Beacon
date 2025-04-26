@@ -5,6 +5,11 @@ Like the project?
 
 <a href="https://buymeacoffee.com/subsh" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
+## Screenshots
+[![Wiki](screenshots/wiki-t.jpg)](screenshots/wiki.png)
+[![Map Zoomed Out](screenshots/map-t.jpg)](screenshots/map.png)
+[![Map zoomed In](screenshots/zmap-t.jpg)](screenshots/zmap.png)
+
 ## Recommendations and Considerations
 ❗ The RPi must be a fresh install, and must be hardwired into internet during setup as the script configures the wlan controller. The initial instructions set you up to be able to SSH in if the RPi is running headless, however, you could use a monitor, mouse, and keyboard if you wish.
 
